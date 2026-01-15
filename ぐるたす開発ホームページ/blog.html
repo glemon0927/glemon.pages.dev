@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>技術ブログ｜ぐるたす開発</title>
+  <style>
+    :root {
+      --bg: #1e2f4d;
+      --card: #2b3f63;
+      --text: #ffffff;
+      --accent: #93c5fd;
+      --accent2: #fde68a;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Rounded M+", "M PLUS Rounded 1c", sans-serif;
+      background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.7)),
+        url("https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E5%A3%81%E7%B4%99/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E5%A3%81%E7%B4%99(%E3%82%B9%E3%83%9E%E3%83%9B)/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E5%A3%81%E7%B4%99(%E3%82%B9%E3%83%9E%E3%83%9B)-1-%E3%82%AB%E3%83%A9%E3%83%BC.png") center / cover fixed;
+      color: var(--text);
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+    body.page-show { opacity: 1; }
+
+    header {
+      padding: 80px 20px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(15,23,42,.6);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: .9rem;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--card), #223459);
+      border-radius: 40px;
+      padding: 32px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .blog-embed {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      border-radius: 28px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .blog-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    .blog-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      color: #e5e7eb;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .blog-fallback a {
+      background: var(--accent2);
+      color: #1e293b;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-size: .85rem;
+      opacity: .85;
+    }
+  </style>
+</head>
+<body class="page-show">
+
+<header>
+  <a class="back-btn" href="index.html">← ホームに戻る</a>
+  <h1>🛠 技術ブログ</h1>
+  <p style="opacity:.85">Unity / VRChat / Web 開発メモ</p>
+</header>
+
+<section>
+  <div class="card">
+    <h2>最新記事</h2>
+    <div class="blog-embed">
+      <iframe src="https://www.youtube.com/@glemon" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <div class="blog-fallback">
+        <p>⚠ このブログはページ内に表示できません</p>
+        <a href="https://www.youtube.com/@glemon" target="_blank">外部サイトで開く →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 ぐるたす開発</footer>
+
+<script>
+  window.addEventListener('load', () => {
+    document.body.classList.add('page-show');
+  });
+</script>
+
+</body>
+</html>

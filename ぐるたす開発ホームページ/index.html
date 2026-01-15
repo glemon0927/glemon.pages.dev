@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ぐるたす開発</title>
+  <!-- OGP / Twitter Card -->
+  <meta property="og:title" content="ぐるたす開発" />
+  <meta property="og:site_name" content="ぐるたす開発" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="VRChatワールド制作・ギミック開発・衣装制作を行う、ぐるたす開発のポータルサイト" />
+  <meta property="og:image"
+    content="https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E9%96%8B%E7%99%BA%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%83%90%E3%83%8A%E3%83%BC.png" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ぐるたす開発" />
+  <meta name="twitter:description" content="VRChatワールド制作・ギミック開発・衣装制作を行う、ぐるたす開発のポータルサイト" />
+  <meta name="twitter:image"
+    content="https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E9%96%8B%E7%99%BA%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%83%90%E3%83%8A%E3%83%BC.png" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png"
+    href="https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%A8%E3%81%A3%E3%81%B7(%E7%B4%99%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0).png"
+    sizes="32x32" />
+  <style>
+    :root {
+      /* 🌞 昼の島ベースカラー */
+      --bg: #fdf6e3;
+      /* 生成り・紙色 */
+      --card: #ffffff;
+      /* 建物（白） */
+      --text: #3b3a36;
+      /* 濃いグレー */
+      --accent: #3b82f6;
+      /* 青アクセント */
+      --accent2: #fde68a;
+      /* 看板イエロー */
+      --accent3: #7dd3fc;
+      /* 水色 */
+    }
+
+    /* ===== 共通フェード演出 ===== */
+    body {
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+
+    body.page-show {
+      opacity: 1;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Rounded M+", "M PLUS Rounded 1c",
+        "Hiragino Kaku Gothic ProN", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      text-align: center;
+      padding: 120px 20px 80px;
+      background: url("https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%9F%E3%81%99%E9%96%8B%E7%99%BA%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%83%90%E3%83%8A%E3%83%BC.png") center / cover no-repeat;
+      border-bottom-left-radius: 80px;
+      border-bottom-right-radius: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(15, 23, 42, .55);
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: .9rem;
+      color: #bfdbfe;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--card), #f5efe0);
+      border-radius: 40px;
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 32px;
+      width: 80px;
+      height: 18px;
+      background: var(--accent2);
+      border-radius: 999px;
+      opacity: 0.8;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.7rem;
+      color: var(--accent);
+    }
+
+    .worlds {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .world {
+      background: linear-gradient(180deg, #ffffff, #f1f5f9);
+      border-radius: 28px;
+      padding: 22px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      position: relative;
+    }
+
+    .world::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 12px;
+      width: 36px;
+      height: 12px;
+      background: var(--accent3);
+      border-radius: 999px;
+      opacity: 0.6;
+    }
+
+    .world::after {
+      content: "🍃";
+      position: absolute;
+      top: -18px;
+      left: 20px;
+      font-size: 1.2rem;
+    }
+
+    .world:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .15);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-size: .85rem;
+      opacity: .85;
+      color: #6b7280;
+    }
+
+    #topBtn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 56px;
+      height: 56px;
+      cursor: pointer;
+      z-index: 1000;
+      background: url("https://filedn.eu/lvwLhe5KHPApJmIi7J7wAdf/PictureFolder/%E3%81%90%E3%82%8B%E3%81%A8%E3%81%A3%E3%81%B7(%E7%B4%99%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0).png") center / contain no-repeat;
+      border-radius: 50%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    #topBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #topBtn:hover {
+      transform: translateY(-4px) scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="page-show">
+
+  <header aria-label="ぐるたす開発 ヘッダー">
+    <a class="back-btn" href="index.html">← ホームに戻る</a>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>🧑 プロフィール</h2>
+      <p>VRChatでワールド制作・ギミック開発・衣装制作をしています。<br>チル・夜景・乗り物・生活感のある世界観が好きです。</p>
+      <p style="opacity:.85;font-size:.9rem;">使用技術：Unity / UdonSharp / Blender / Substance / Astro / React</p>
+    </div>
+
+    <div class="card">
+      <h2>🗺 島マップ</h2>
+      <p style="opacity:.9">島の施設をえらんでね</p>
+      <div class="worlds">
+        <!-- 追加：基本施設 -->
+        <a class="world" href="#profile">
+          <h3>🧑 プロフィール</h3>
+          <p>自己紹介・スキル</p>
+        </a>
+        <a class="world" href="#vrchat-worlds">
+          <h3>🌍 VRChatワールド</h3>
+          <p>一覧への導線</p>
+        </a>
+        <a class="world" href="https://booth.pm/" target="_blank">
+          <h3>🛒 BOOTH</h3>
+          <p>配布・販売</p>
+        </a>
+        <a class="world" href="/apps.html">
+          <h3>📱 作ったアプリ</h3>
+          <p>Web / Tool</p>
+        </a>
+        <a class="world" href="/calendar.html">
+          <h3>📅 カレンダー</h3>
+          <p>イベント予定</p>
+        </a>
+
+        <!-- 既存の島マップ項目 -->
+        <a class="world" href="/assets.html">
+          <h3>📦 開発アセット図鑑</h3>
+          <p>自作アセットやギミック</p>
+        </a>
+        <a class="world" href="/blog.html">
+          <h3>🛠 技術ブログ</h3>
+          <p>Unity / VRChat / Web</p>
+        </a>
+        <a class="world" href="https://www.youtube.com/" target="_blank">
+          <h3>🎥 YouTube</h3>
+          <p>制作記録・解説</p>
+        </a>
+        <a class="world" href="/photos.html">
+          <h3>📸 写真日記</h3>
+          <p>制作スナップ</p>
+        </a>
+        <a class="world" href="/fashion.html">
+          <h3>👗 バーチャルファッション図鑑</h3>
+          <p>衣装まとめ</p>
+        </a>
+        <a class="world" href="/projects.html">
+          <h3>🧵 衣装制作プロジェクト</h3>
+          <p>進行中企画</p>
+        </a>
+        <a class="world" href="/releases.html">
+          <h3>🚀 リリースノート</h3>
+          <p>更新履歴</p>
+        </a>
+        <a class="world" href="/downloads.html">
+          <h3>🗂 開発アセットページ</h3>
+          <p>DL・仕様</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>VRChat ワールド</h2>
+      <div class="worlds">
+        <a class="world" href="/worlds/train.html">
+          <h3>🚃 寝台列車ワールド</h3>
+          <p>車窓を眺める</p>
+        </a>
+        <a class="world" href="/worlds/night.html">
+          <h3>🌙 チル夜景ワールド</h3>
+          <p>やさしい光</p>
+        </a>
+        <a class="world" href="/worlds/chill.html">
+          <h3>☁️ ゆるふわチルルーム</h3>
+          <p>休憩用</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>SNS / Links</h2>
+      <p>
+        <a href="https://twitter.com/yourname" target="_blank">Twitter</a> ／
+        <a href="https://github.com/yourname" target="_blank">GitHub</a> ／
+        <a href="mailto:contact@example.com">Contact</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>© 2026 ぐるたす開発</footer>
+
+  <div id="topBtn" aria-label="トップへ戻る"></div>
+
+  <script>
+    const topBtn = document.getElementById('topBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) topBtn.classList.add('show');
+      else topBtn.classList.remove('show');
+    });
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    // フェードイン（Canvasでも必ず表示されるよう保険）
+    window.addEventListener('load', () => {
+      document.body.classList.add('page-show');
+    });
+  </script>
+
+</body>
+
+</html>
